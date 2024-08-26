@@ -1,8 +1,11 @@
 package com.sky.controller.admin;
 
 import com.github.pagehelper.Page;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -86,5 +89,18 @@ public class DishController {
         log.info("修改菜品：{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);
         return Result.success(dishDTO);
+    }
+
+    /**
+     * 套餐起售、停售
+     * @param status
+     * @return
+     */
+    @ApiOperation("套餐起售、停售")
+    @PostMapping("/status/{status}")
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        log.info("设置套餐状态：{},{}", status,id);
+        dishService.startOrStop(status,id);
+        return Result.success();
     }
 }
