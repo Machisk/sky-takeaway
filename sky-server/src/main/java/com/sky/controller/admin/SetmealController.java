@@ -24,6 +24,19 @@ public class SetmealController {
     private SetmealService setmealService;
 
     /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
+    @ApiOperation("新增套餐")
+    @PostMapping
+    public Result insert(@RequestBody SetmealDTO setmealDTO) {
+        log.info("新增套餐：{}",setmealDTO);
+        setmealService.insert(setmealDTO);
+        return Result.success();
+    }
+
+    /**
      * 套餐分页查询
      * @param setmealPageQueryDTO
      * @return

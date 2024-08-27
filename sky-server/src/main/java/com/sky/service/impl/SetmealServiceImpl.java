@@ -32,6 +32,27 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealDishMapper setmealDishMapper;
 
     /**
+     * 新增套餐
+     * @param setmealDTO
+     */
+    @Transactional
+    @Override
+    public void insert(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+        //插入套餐基本数据
+        setmealMapper.insert(setmeal);
+
+        Long setmealId = setmeal.getId();
+
+        List<SetmealDish> setmealDishList = setmealDTO.getSetmealDishes();
+        setmealDishList.forEach(setmealDish -> {
+            setmealDish.setSetmealId(setmealId);
+        });
+        setmealDishMapper.insertBatch(setmealDishList);
+    }
+
+    /**
      * 套餐分页查询
      * @param setmealPageQueryDTO
      * @return
