@@ -32,8 +32,11 @@
  
 >8.27  
 > 套餐分页查询  
-> > 分页查询：  
-> > + controller层:pageResult,pageQueryDTO
-> > + service层:传参给pageHelper进行构造,setMealVO,返回构建pageResult
->删除套餐以及套餐与其中菜品的关系
->修改套餐
+> > 分页查询：    
+> > + controller层:pageResult,pageQueryDTO    
+> > + service层:传参给pageHelper进行构造,setMealVO,返回构建pageResult    
+>删除套餐以及套餐与其中菜品的关系  
+>修改套餐  
+>新增套餐和修改套餐排错  
+>套餐起售、停售  
+
