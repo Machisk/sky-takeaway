@@ -26,9 +26,13 @@
 > 修改菜品  
 > 套餐起售、停售功能代码  
 > 新增套餐功能代码  
-> > + 根据分类id查找菜品   
+> > + 根据分类id查找菜品     
 > > + 新增套餐（新增套餐信息、获取DTO中的套餐菜品关系，通过套餐自动生成的id将套餐和菜品关系插入到套餐菜品关系表setmeal_dish）   
 > > + transactional注解保证对多表进行操作时数据一致性   
  
->8.27
-> 
+>8.27  
+> 套餐分页查询  
+> > 分页查询：  
+> > + controller层:pageResult,pageQueryDTO
+> > + service层:传参给pageHelper进行构造,setMealVO,返回构建pageResult
+>
