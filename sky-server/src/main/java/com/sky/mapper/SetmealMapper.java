@@ -1,8 +1,10 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.annotation.AutoFill;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
+import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -42,4 +44,11 @@ public interface SetmealMapper {
      */
     @Delete("delete from setmeal where id = #{setmealId}")
     void delete(Long setmealId);
+
+    /**
+     * 修改套餐基本信息
+     * @param setmeal
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
