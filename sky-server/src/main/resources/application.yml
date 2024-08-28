@@ -18,6 +18,10 @@ spring:
       web:
         resources:
           static-locations: classpath:/UploadFile/
+  redis:
+    port: ${sky.redis.port}
+    host: ${sky.redis.host}
+    database: ${sky.redis.database}
 
 mybatis:
   #mapper配置文件
