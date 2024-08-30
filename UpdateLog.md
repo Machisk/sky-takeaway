@@ -44,3 +44,6 @@
 > Redis配置、如何五种数据库、Java操作Redis
 > 店铺营业状态设置与查询
 
+> 8.29
+> vx小程序appId：	wx751441f05010e112
+> 密钥：cbbe082eea835f2b690ac78aa0a8a933

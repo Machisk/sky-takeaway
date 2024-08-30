@@ -39,7 +39,7 @@ public class ShopController {
      * @return
      */
     @ApiOperation("获取店铺营业状态")
-    @GetMapping("/{status}")
+    @GetMapping("/status")
     public Result<Integer> getStatus(){
         ValueOperations valueOperations = redisTemplate.opsForValue();
         Integer status = (Integer) valueOperations.get(KEY);

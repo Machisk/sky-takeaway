@@ -5,3 +5,5 @@
 2024/08/29 00:08:48 [emerg] 32104#92444: CreateDirectory() "D:\sky takeaway\sky-take-out\nginx-1.20.2/temp/client_body_temp" failed (3: The system cannot find the path specified)
 2024/08/29 00:08:58 [emerg] 60404#42740: CreateDirectory() "D:\sky takeaway\sky-take-out\nginx-1.20.2/temp/client_body_temp" failed (3: The system cannot find the path specified)
 2024/08/29 00:09:24 [emerg] 49732#89020: CreateDirectory() "D:\sky takeaway\sky-take-out\nginx-1.20.2/temp/client_body_temp" failed (3: The system cannot find the path specified)
+2024/08/29 00:11:31 [emerg] 27064#6080: CreateDirectory() "D:\sky takeaway\sky-take-out\nginx-1.20.2/temp/client_body_temp" failed (3: The system cannot find the path specified)
+2024/08/29 00:11:43 [emerg] 90520#101516: CreateDirectory() "D:\sky takeaway\sky-take-out\nginx-1.20.2/temp/client_body_temp" failed (3: The system cannot find the path specified)
