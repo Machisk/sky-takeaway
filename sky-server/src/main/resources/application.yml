@@ -49,7 +49,7 @@ sky:
     admin-token-name: token
     user-secret-key: machisk
     user-ttl: 7200000
-    user-token-name: a
+    user-token-name: authentication
   wechat:
     appid: ${sky.wechat.appid}
     secret: ${sky.wechat.secret}
