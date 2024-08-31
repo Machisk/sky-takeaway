@@ -71,7 +71,7 @@ public class DishController {
         dishService.deleteBatch(ids);
 
         //直接将所有缓存清除
-        cleanCache("dish_");
+        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -100,7 +100,7 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
 
         //直接将所有缓存清除
-        cleanCache("dish_");
+        cleanCache("dish_*");
         return Result.success(dishDTO);
     }
 
@@ -115,7 +115,7 @@ public class DishController {
         log.info("设置套餐状态：{},{}", status,id);
         dishService.startOrStop(status,id);
         //直接将所有缓存清除
-        cleanCache("dish_");
+        cleanCache("dish_*");
         return Result.success();
     }
 
