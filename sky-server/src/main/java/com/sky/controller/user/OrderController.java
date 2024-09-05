@@ -55,4 +55,18 @@ public class OrderController {
         return Result.success(orderPaymentVO);
     }
 
+    /**
+     * 历史订单查询
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    @ApiOperation("历史订单查询")
+    @GetMapping("/historyOrders")
+    public Result<PageResult> page(int page,int pageSize,Integer status) {
+        log.info("历史订单查询参数：{}",page,pageSize,status);
+        PageResult pageResult = orderService.pageQueryOrders(page,pageSize,status);
+        return Result.success(pageResult);
+    }
 }

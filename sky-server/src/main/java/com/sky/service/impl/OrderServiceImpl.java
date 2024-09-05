@@ -167,4 +167,42 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 历史订单查询
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    @Override
+    public PageResult pageQueryOrders(int page, int pageSize, Integer status) {
+        //传参调用分页函数进行分页查询
+        PageHelper.startPage(page, pageSize);
+
+        //传DTO进行条件查询，传给pageQuery
+        OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
+        ordersPageQueryDTO.setStatus(status);
+        ordersPageQueryDTO.setUserId(BaseContext.getCurrentId());
+
+        Page<Orders> pageQuery = orderMapper.pageQuery(ordersPageQueryDTO);
+
+        List<OrderVO> orderVOList = new ArrayList<>();
+
+        if (pageQuery != null && pageQuery.getTotal() > 0) {
+            for (Orders orders : pageQuery) {
+                //根据orderId查询订单详细信息
+                Long orderId = orders.getId();
+                List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orderId);
+
+                //属性拷贝得到订单信息，将查询到的订单详细信息放入VO对象中
+                OrderVO orderVO = new OrderVO();
+                BeanUtils.copyProperties(orders, orderVO);
+                orderVO.setOrderDetailList(orderDetailList);
+
+                //将每次得到的VO放入最后的list中
+                orderVOList.add(orderVO);
+            }
+        }
+        return new PageResult(pageQuery.getTotal(),orderVOList);
+    }
 }
