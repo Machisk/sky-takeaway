@@ -174,6 +174,7 @@ public class OrderServiceImpl implements OrderService {
      * @param status
      * @return
      */
+    @Transactional
     @Override
     public PageResult pageQueryOrders(int page, int pageSize, Integer status) {
         //传参调用分页函数进行分页查询
@@ -204,5 +205,23 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return new PageResult(pageQuery.getTotal(),orderVOList);
+    }
+
+    /**
+     * 根据id查询订单详情
+     * @param id
+     * @return
+     */
+    @Transactional
+    @Override
+    public OrderVO getDetailById(Long id) {
+        Orders orders = orderMapper.getById(id);
+
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orders.getId());
+        OrderVO orderVO = new OrderVO();
+        BeanUtils.copyProperties(orders, orderVO);
+        orderVO.setOrderDetailList(orderDetailList);
+
+        return orderVO;
     }
 }
