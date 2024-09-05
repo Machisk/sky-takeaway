@@ -224,4 +224,37 @@ public class OrderServiceImpl implements OrderService {
 
         return orderVO;
     }
+
+    @Override
+    public void cancelOrderById(Long id) throws Exception {
+        //根据id查询订单
+        Orders orders = orderMapper.getById(id);
+
+        //判断订单是否存在
+        if (orders == null){
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        //如果订单状态不是待支付或待接单，则需要联系商家
+        Integer status = orders.getStatus();
+        if (status > 2){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+        Orders orderss = new Orders();
+        orderss.setId(orders.getId());
+
+        //待接单状态下需要退款
+        if (orderss.equals(Orders.TO_BE_CONFIRMED)){
+            weChatPayUtil.refund(
+                    orders.getNumber(),//商户订单号
+                    orders.getNumber(),//商户退款单号
+                    new BigDecimal(String.valueOf(orders.getAmount())),//退款金额
+                    new BigDecimal(String.valueOf(orders.getAmount())));//原订单金额
+            orderss.setStatus(Orders.REFUND);
+        }
+        orderss.setOrderTime(LocalDateTime.now());
+        orderss.setCancelReason("用户取消");
+        orderss.setStatus(Orders.CANCELLED);
+        orderMapper.update(orderss);
+    }
 }
