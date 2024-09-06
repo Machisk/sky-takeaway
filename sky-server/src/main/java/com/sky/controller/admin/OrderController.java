@@ -79,7 +79,7 @@ public class OrderController {
      */
     @ApiOperation("拒单")
     @PutMapping("/rejection")
-    public Result rejection(@RequestBody OrdersRejectionDTO ordersRejectionDTO){
+    public Result rejection(@RequestBody OrdersRejectionDTO ordersRejectionDTO) throws Exception {
         orderService.rejection(ordersRejectionDTO);
         return Result.success();
     }
