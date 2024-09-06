@@ -289,6 +289,7 @@ public class OrderServiceImpl implements OrderService {
      * @param ordersPageQueryDTO
      * @return
      */
+    @Transactional
     @Override
     public PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO) {
         PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
@@ -333,5 +334,22 @@ public class OrderServiceImpl implements OrderService {
             return orderDish;
         }).collect(Collectors.toList());
         return String.join("",orderDishList);
+    }
+
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
+    @Override
+    public OrderStatisticsVO statistics() {
+        Integer toBeConfirmed = orderMapper.countStatus(Orders.TO_BE_CONFIRMED);//待接单
+        Integer confirmed = orderMapper.countStatus(Orders.CONFIRMED);//待派送
+        Integer deliveryInProgress = orderMapper.countStatus(Orders.DELIVERY_IN_PROGRESS);
+
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        orderStatisticsVO.setConfirmed(toBeConfirmed);
+        orderStatisticsVO.setDeliveryInProgress(deliveryInProgress);
+        orderStatisticsVO.setConfirmed(confirmed);
+        return orderStatisticsVO;
     }
 }
