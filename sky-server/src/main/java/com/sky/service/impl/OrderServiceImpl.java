@@ -365,4 +365,37 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         orderMapper.update(orders);
     }
+
+    /**
+     * 拒单
+     * @param ordersRejectionDTO
+     */
+    @Override
+    public void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception {
+
+        Orders orderById = orderMapper.getById(ordersRejectionDTO.getId());
+        Integer status = orderById.getStatus();
+        if (!status.equals(Orders.TO_BE_CONFIRMED) || orderById != null){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Integer payStatus = orderById.getPayStatus();
+        if (payStatus == Orders.PAID){
+            String refund = weChatPayUtil.refund(
+                    orderById.getNumber(),
+                    orderById.getNumber(),
+                    new BigDecimal(String.valueOf(orderById.getAmount())),
+                    new BigDecimal(String.valueOf(orderById.getAmount())));
+            log.info("申请退款：{}",refund);
+        }
+
+        Orders orders = Orders.builder()
+                .id(ordersRejectionDTO.getId())
+                .status(Orders.CANCELLED)
+                .rejectionReason(ordersRejectionDTO.getRejectionReason())
+                .cancelTime(LocalDateTime.now())
+                .build();
+
+        orderMapper.update(orders);
+    }
 }
