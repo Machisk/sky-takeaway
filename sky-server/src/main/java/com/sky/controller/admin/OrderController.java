@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
@@ -56,5 +57,17 @@ public class OrderController {
     public Result<OrderVO> details(@PathVariable Long id){
         OrderVO detailById = orderService.getDetailById(id);
         return Result.success(detailById);
+    }
+
+    /**
+     * 接单
+     * @param ordersConfirmDTO
+     * @return
+     */
+    @ApiOperation("接单")
+    @PutMapping("/confirm")
+    public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO){
+        orderService.confirm(ordersConfirmDTO);
+        return Result.success();
     }
 }
