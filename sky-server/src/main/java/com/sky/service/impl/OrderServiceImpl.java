@@ -542,7 +542,7 @@ public class OrderServiceImpl implements OrderService {
     public void complete(Long id) {
         Orders order = orderMapper.getById(id);
         Integer status = order.getStatus();
-        if (order != null || !status.equals(Orders.DELIVERY_IN_PROGRESS)){
+        if (order != null || !status.equals(Orders.DELIVERY_IN_PROGRESS)) {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
 
@@ -552,5 +552,28 @@ public class OrderServiceImpl implements OrderService {
                 .deliveryTime(LocalDateTime.now())
                 .build();
         orderMapper.update(orders);
+    }
+
+    /**
+     * 客户催单
+     * @param id
+     */
+    @Override
+    public void reminder(Long id) {
+        Orders order = orderMapper.getById(id);
+
+        Integer status = order.getStatus();
+        if (order != null ){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Map map = new HashMap();
+        map.put("type",2);//2表示客户催单
+        map.put("orderId",id);
+        map.put("content","订单号"+order.getId());
+
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
+
     }
 }
