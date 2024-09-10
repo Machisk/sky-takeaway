@@ -77,4 +77,15 @@ public interface OrderMapper {
      * @return
      */
     Integer getCountOrdersByMap(Map map);
+
+    /**
+     * 根据指定时间区间统计top10排名
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @Select("select od.name,sum(od.number) number from order_detail od,orders os " +
+            "where order_time < #{endTime} and order_time > #{beginTime} and od.order_id = os.id and os.status = 5 " +
+            "group by od.name order by number desc limit 0,10")
+    List<GoodsSalesDTO> getSalesTop(LocalDateTime beginTime, LocalDateTime endTime);
 }
