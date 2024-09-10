@@ -17,7 +17,7 @@
             <if test="description != null">description = #{description},</if>
             <if test="status != null">status = #{status},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
-            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateUser != null">update_user = #{updateUser}</if>
         </set>
         where id = #{id}
     </update>
@@ -46,6 +46,17 @@
             </if>
             <if test="status != null">
                 and status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from setmeal
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
             </if>
         </where>
     </select>
