@@ -64,10 +64,17 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 
     /**
-     * 根据动态条件统计营业数据
+     * 统计营业数据
      * @param map
      * @return
      */
     @Select("select sum(orders.amount) from orders where order_time > #{begin} and order_time < #{end} and status = #{status}")
     Double sumByMap(Map map);
+
+    /**
+     * 根据动态条件统计订单数据
+     * @param map
+     * @return
+     */
+    Integer getCountOrdersByMap(Map map);
 }
